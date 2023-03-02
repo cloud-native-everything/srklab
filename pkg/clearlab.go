@@ -14,10 +14,10 @@ func Clear(configFile string) {
 
 	kindVars := getVars(configFile)
 	wg.Add(1)
-	go delclab()
+	go delclab(kindVars.ClabTopology)
 	delKind(*kindVars)
 	wg.Wait()
-	DockerNet.DockerNetworkDelete("kind")
+	DockerNet.DockerNetworkDelete(kindVars.Network)
 
 }
 
@@ -44,10 +44,10 @@ func delKind(karray Kind_Data) {
 }
 
 
-func delclab() {
+func delclab(mytopofile string) {
 
 	// Create a new command to run "ls" with no arguments
-	cmd := exec.Command("/usr/bin/containerlab", "destroy", "--topo", "/root/srklab/topo.yml")
+	cmd := exec.Command("/usr/bin/containerlab", "destroy", "--topo", mytopofile)
 	cmd.Stdout = &stdOut{}
 	// Run the command and wait for it to finish
 	err := cmd.Run()

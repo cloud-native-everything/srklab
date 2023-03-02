@@ -9,7 +9,7 @@ import (
 	"github.com/docker/docker/client"
 )
 
-func DockerNetworkCreate() {
+func DockerNetworkCreate(mynetwork string, myprefix string) {
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	if err != nil {
 		panic(err)
@@ -17,10 +17,10 @@ func DockerNetworkCreate() {
 
 	// Create an IPAM configuration with a subnet
 	ipamConfig := &network.IPAMConfig{
-		Subnet: "172.18.0.0/16",
+		Subnet: myprefix,
 	}
 
-	networkResponse, err := cli.NetworkCreate(context.Background(), "kind", types.NetworkCreate{
+	networkResponse, err := cli.NetworkCreate(context.Background(), mynetwork, types.NetworkCreate{
 		CheckDuplicate: true,
 		Driver:         "bridge",
 		EnableIPv6:     false,

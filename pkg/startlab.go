@@ -11,10 +11,12 @@ import (
 )
 
 func Start(configFile string) {
-	DockerNet.DockerNetworkCreate()
+
+
         kindVars := getVars(configFile)
+	DockerNet.DockerNetworkCreate(kindVars.Network, kindVars.Prefix)
 	wg.Add(1)
-	go clab()
+	go clab(kindVars.ClabTopology)
 	runKind(*kindVars)
         wg.Wait()
 }
@@ -47,10 +49,10 @@ func runKind(karray Kind_Data) {
 }
 
 
-func clab(){
+func clab(mytopofile string){
 
     // Create a new command to run "ls" with no arguments
-    cmd := exec.Command("/usr/bin/containerlab", "deploy",  "--topo" ,  "/root/xno-SRv6-23.02-1/topo.yml")
+    cmd := exec.Command("/usr/bin/containerlab", "deploy",  "--topo" , mytopofile )
 //	cmd := exec.Command("ls")
 	cmd.Stdout = &stdOut{}
     // Run the command and wait for it to finish
