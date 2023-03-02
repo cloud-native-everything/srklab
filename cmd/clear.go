@@ -6,7 +6,7 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/cloud-native-everything/srklab/pkg/clearlab"
+	"github.com/cloud-native-everything/srklab/pkg"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +19,7 @@ var clearCmd = &cobra.Command{
 sorry to see you leave.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		clearlab.Main(configFile)
+		srklab.Clear(configFile)
 	},
 }
 

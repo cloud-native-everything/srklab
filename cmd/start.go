@@ -7,7 +7,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/cloud-native-everything/srklab/pkg/startlab"
+	"github.com/cloud-native-everything/srklab/pkg"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +23,7 @@ var startCmd = &cobra.Command{
 ensure to clean the lab first.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		startlab.Main(configFile)
+		srklab.Start(configFile)
 	},
 }
 

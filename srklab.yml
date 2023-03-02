@@ -1,19 +1,52 @@
 network: "kind"  #do not change unless you do that in all the files
 prefix: "172.18.0.0/16" #do not change unless you do that in all the files
+clabTopology: "/root/srklab/topo.yml"  
 clusters:
     - name: "edge1"
       kubeconfig: "/root/.kube/config-edge1"
-      config: "/root/xno-SRv6-23.02-1/kind/cluster_edge1.yaml"
+      config: "/root/srklab/kind/cluster_edge1.yaml"
       image: "enc-kind-worker:v1.22.2"
+      imagesToLoad:
+        - image: alpine:latest
+        - image: rogerw/cassowary:v0.14.1
+        - image: pinrojas/cassowary:0.33
+        - image: prom/pushgateway:latest  
     - name: "edge2"
       kubeconfig: "/root/.kube/config-edge2"
-      config: "/root/xno-SRv6-23.02-1/kind/cluster_edge1.yaml"
+      config: "/root/srklab/kind/cluster_edge1.yaml"
       image: "enc-kind-worker:v1.22.2"
+      imagesToLoad:
+        - image: alpine:latest
+        - image: python:latest
     - name: "datacenter"
       kubeconfig: "/root/.kube/config-datacenter"
-      config: "/root/xno-SRv6-23.02-1/kind/cluster_edge1.yaml"
+      config: "/root/srklab/kind/cluster_edge1.yaml"
       image: "enc-kind-worker:v1.22.2"
+      imagesToLoad:
+        - image: alpine:latest
+        - image: python:latest
+        - image: quay.io/metallb/speaker:v0.12.1
+        - image: quay.io/metallb/controller:v0.12.1
     - name: "netorch"  
       kubeconfig: "/root/.kube/config-netorch"
-      config: "/root/xno-SRv6-23.02-1/kind/cluster_edge1.yaml"
+      config: "/root/srklab/kind/cluster_edge1.yaml"
       image: "enc-kind-worker:v1.22.2"
+      imagesToLoad:
+        - image: alpine:latest
+        - image: python:latest
+        - image: quay.io/metallb/speaker:v0.12.1
+        - image: quay.io/metallb/controller:v0.12.1
+# this is the info clab tool will use to interconnect clusters and containerlab instances
+links:
+    - k8sNode: "clab-srv6-demo-LEAF-E1-1:e1-10"
+      clabNode: "edge1-control-plane:e1-1"
+      k8sIpv4: "192.168.201.101"
+    - k8sNode: "clab-srv6-demo-LEAF-E2-1:e1-10"
+      clabNode: "edge2-control-plane:e1-1"
+      k8sIpv4: "192.168.202.101"
+    - k8sNode: "clab-srv6-demo-LEAF-DC-1:e1-10"
+      clabNode: "datacenter-worker:e1-1"
+      k8sIpv4: "192.168.101.101"
+    - k8sNode: "clab-srv6-demo-LEAF-DC-2:e1-10"
+      clabNode: "datacenter-worker2:e1-1"
+      k8sIpv4: "192.168.101.102"
