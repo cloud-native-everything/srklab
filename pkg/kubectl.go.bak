@@ -1,0 +1,55 @@
+package srklab
+
+import (
+	"context"
+	"fmt"
+	"io/ioutil"
+
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime/serializer/yaml"
+	"k8s.io/client-go/dynamic"
+	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+)
+
+func ExecKubeApps(myapps Resources_Data, mykubeconf string, myns string) {
+	// Load Kubernetes configuration from file
+	config, err := clientcmd.BuildConfigFromFlags("", mykubeconf)
+	if err != nil {
+		panic(err)
+	}
+
+	// Create a dynamic client
+	dynamicClient, err := dynamic.NewForConfig(config)
+	if err != nil {
+		panic(err)
+	}
+	for i := 0; i < len(myapps.App); i++ {
+
+		// Read the YAML configuration file
+		filePath := myapps.App[i]
+		content, err := ioutil.ReadFile(string(filePath))
+		if err != nil {
+			panic(err)
+		}
+
+		// Decode the YAML file into an unstructured object
+		decoder := yaml.NewDecodingSerializer(unstructured.UnstructuredJSONScheme)
+		obj := &unstructured.Unstructured{}
+		_, _, err = decoder.Decode(content, nil, obj)
+		if err != nil {
+			panic(err)
+		}
+
+		// Apply the configuration using the dynamic client
+		ctx := context.Background()
+		_, err = dynamicClient.Resource(obj.GroupVersionKind().GroupVersionKind()).Namespace(myns).Create(ctx, obj, metav1.CreateOptions{})
+
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Printf("Configuration for %s applied successfully!", myapps.App[i])
+	}
+}

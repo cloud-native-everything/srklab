@@ -10,26 +10,39 @@ clusters:
         - image: alpine:latest
         - image: rogerw/cassowary:v0.14.1
         - image: pinrojas/cassowary:0.33
-        - image: prom/pushgateway:latest  
+        - image: prom/pushgateway:latest
+      resources:
+        - app: "/root/srklab/app/prom.yaml"
+        - app: "/root/srklab/app/ipvlan-cni-edge1.yaml"
+        - app: "/root/srklab/app/ipvlan-pods-edge1.yaml"
     - name: "edge2"
       kubeconfig: "/root/.kube/config-edge2"
-      config: "/root/srklab/kind/cluster_edge1.yaml"
+      config: "/root/srklab/kind/cluster_edge2.yaml"
       image: "enc-kind-worker:v1.22.2"
       imagesToLoad:
         - image: alpine:latest
         - image: python:latest
+      resources:
+        - app: "/root/srklab/app/ipvlan-cni-edge2.yaml"
+        - app: "/root/srklab/app/ipvlan-pods-edge2.yaml"
     - name: "datacenter"
       kubeconfig: "/root/.kube/config-datacenter"
-      config: "/root/srklab/kind/cluster_edge1.yaml"
+      config: "/root/srklab/kind/cluster_datacenter.yaml"
       image: "enc-kind-worker:v1.22.2"
       imagesToLoad:
         - image: alpine:latest
         - image: python:latest
         - image: quay.io/metallb/speaker:v0.12.1
         - image: quay.io/metallb/controller:v0.12.1
+      resources:
+        - app: "/root/srklab//metallb/metallb-namespace.yaml"
+        - app: "/root/srklab//metallb/metallb-manifest.yaml"
+        - app: "/root/srklab//metallb/metallb-bgp-setup.yaml"
+        - app: "/root/srklab/app/hello-app-python-datacenter.yaml"
+        - app: "/root/srklab/app/hello-app-lb-datacenter.yaml"
     - name: "netorch"  
       kubeconfig: "/root/.kube/config-netorch"
-      config: "/root/srklab/kind/cluster_edge1.yaml"
+      config: "/root/srklab/kind/cluster_netorch.yaml"
       image: "enc-kind-worker:v1.22.2"
       imagesToLoad:
         - image: alpine:latest
@@ -38,15 +51,19 @@ clusters:
         - image: quay.io/metallb/controller:v0.12.1
 # this is the info clab tool will use to interconnect clusters and containerlab instances
 links:
-    - k8sNode: "clab-srv6-demo-LEAF-E1-1:e1-10"
-      clabNode: "edge1-control-plane:e1-1"
-      k8sIpv4: "192.168.201.101"
-    - k8sNode: "clab-srv6-demo-LEAF-E2-1:e1-10"
-      clabNode: "edge2-control-plane:e1-1"
-      k8sIpv4: "192.168.202.101"
-    - k8sNode: "clab-srv6-demo-LEAF-DC-1:e1-10"
-      clabNode: "datacenter-worker:e1-1"
-      k8sIpv4: "192.168.101.101"
-    - k8sNode: "clab-srv6-demo-LEAF-DC-2:e1-10"
-      clabNode: "datacenter-worker2:e1-1"
-      k8sIpv4: "192.168.101.102"
+    - k8sNode: "edge1-control-plane:e1-1"
+      clabNode: "clab-srv6-demo-LEAF-E1-1:e1-10"
+      k8sIpv4: "192.168.201.101/24"
+      k8sIpv4Gw: "192.168.201.1"
+    - k8sNode: "edge2-control-plane:e1-1"
+      clabNode: "clab-srv6-demo-LEAF-E2-1:e1-10"
+      k8sIpv4: "192.168.202.101/24"
+      k8sIpv4Gw: "192.168.202.1"
+    - k8sNode: "datacenter-worker:e1-1"
+      clabNode: "clab-srv6-demo-LEAF-DC-1:e1-10"
+      k8sIpv4: "192.168.101.101/24"
+      k8sIpv4Gw: "192.168.101.1"
+    - k8sNode: "datacenter-worker2:e1-1"
+      clabNode: "clab-srv6-demo-LEAF-DC-2:e1-10"
+      k8sIpv4: "192.168.101.102/24"
+      k8sIpv4Gw: "192.168.101.1"

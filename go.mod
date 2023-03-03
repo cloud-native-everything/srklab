@@ -11,6 +11,14 @@ require (
 
 require github.com/docker/docker v23.0.1+incompatible
 
+require (
+	github.com/Azure/go-ansiterm v0.0.0-20230124172434-306776ec8161 // indirect
+	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/kr/text v0.2.0 // indirect
+	github.com/morikuni/aec v1.0.0 // indirect
+	gotest.tools v2.2.0+incompatible // indirect
+)
+
 replace github.com/docker/docker => github.com/docker/docker v17.12.0-ce-rc1.0.20210128214336-420b1d36250f+incompatible
 
 require (
@@ -33,8 +41,8 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
-	golang.org/x/net v0.5.0 // indirect
-	golang.org/x/sys v0.4.0 // indirect
+	golang.org/x/net v0.7.0 // indirect
+	golang.org/x/sys v0.5.0 // indirect
 	golang.org/x/tools v0.1.12 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	google.golang.org/grpc v1.53.0 // indirect

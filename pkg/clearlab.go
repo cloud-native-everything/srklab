@@ -33,9 +33,6 @@ func delKind(karray Kind_Data) {
 		wg.Done()
 	}
 
-	fmt.Println("--->", karray.Cluster)
-	fmt.Println(len(karray.Cluster))
-
 	aux := []string{"delete", "clusters", "--all"}
 	fmt.Println("--->", aux)
 	wg.Add(1)
