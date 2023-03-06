@@ -12,6 +12,8 @@ clusters:
         - image: pinrojas/cassowary:0.33
         - image: prom/pushgateway:latest
       resources:
+        - app: "/root/srklab/kind/multus-daemonset.yml"
+        - app: "/root/srklab/kind/cni-install.yml"
         - app: "/root/srklab/app/prom.yaml"
         - app: "/root/srklab/app/ipvlan-cni-edge1.yaml"
         - app: "/root/srklab/app/ipvlan-pods-edge1.yaml"
@@ -23,6 +25,8 @@ clusters:
         - image: alpine:latest
         - image: python:latest
       resources:
+        - app: "/root/srklab/kind/multus-daemonset.yml"
+        - app: "/root/srklab/kind/cni-install.yml"
         - app: "/root/srklab/app/ipvlan-cni-edge2.yaml"
         - app: "/root/srklab/app/ipvlan-pods-edge2.yaml"
     - name: "datacenter"
@@ -35,6 +39,8 @@ clusters:
         - image: quay.io/metallb/speaker:v0.12.1
         - image: quay.io/metallb/controller:v0.12.1
       resources:
+        - app: "/root/srklab/kind/multus-daemonset.yml"
+        - app: "/root/srklab/kind/cni-install.yml"
         - app: "/root/srklab//metallb/metallb-namespace.yaml"
         - app: "/root/srklab//metallb/metallb-manifest.yaml"
         - app: "/root/srklab//metallb/metallb-bgp-setup.yaml"

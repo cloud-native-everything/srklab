@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"regexp"
 
-	DockerNet "github.com/cloud-native-everything/srklab/pkg/dockerapi"
+	// DockerNet "github.com/cloud-native-everything/srklab/pkg/dockerapi"
 	kindApp "github.com/cloud-native-everything/srklab/pkg/kind"
 	"sigs.k8s.io/kind/pkg/cmd"
 )
@@ -14,7 +14,7 @@ import (
 func Start(configFile string) {
 
 	kindVars := getVars(configFile)
-	DockerNet.DockerNetworkCreate(kindVars.Network, kindVars.Prefix)
+	/*DockerNet.DockerNetworkCreate(kindVars.Network, kindVars.Prefix)
 	wg.Add(1)
 	go clab(kindVars.ClabTopology)
 	runKind(*kindVars)
@@ -23,9 +23,14 @@ func Start(configFile string) {
 	wg.Wait()
 	cklinks(kindVars.Links)
 	kindsetInf(kindVars.Links)
-	/* for i := 0; i < len(kindVars.Cluster); i++ {
-		execApps(kindVars.Cluster[i].Resources, kindVars.Cluster[i].Kubeconfig, "default")
-	} */
+	for i := 0; i < len(kindVars.Cluster); i++ {
+		wg.Add(1)
+		go execApps(kindVars.Cluster[i].Resources, kindVars.Cluster[i].Kubeconfig, "default")
+	}
+	wg.Wait() */
+	for i := 0; i < len(kindVars.Cluster); i++ {
+		MyNodes(kindVars.Cluster[i].Name)
+	}
 }
 
 // Main is the kind main(), it will invoke Run(), if an error is returned
@@ -110,11 +115,9 @@ func kindsetInf(mylinks []Link_Data) {
 	}
 }
 
-/*
 func execApps(myres []Resources_Data, kubeconf string, myns string) {
 	for i := 0; i < len(myres); i++ {
 		ExecKubeApps(myres[i], kubeconf, myns)
 	}
-
+	wg.Done()
 }
-*/
