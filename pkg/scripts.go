@@ -25,3 +25,37 @@ func KNetScript(myipv4 string, myif string, mygw string, mynode string) {
 	}
 	fmt.Println(string(output))
 }
+
+func KNetVlanMaster(vlan string, bondif string, myif string, mynode string) {
+	cmd := exec.Command("docker", "exec", "-i", mynode, "bash")
+	cmd.Stdin = strings.NewReader(fmt.Sprintf(`#!/bin/bash	
+	ip link add link %s name VLAN-%s type vlan id %s
+    ip link set dev VLAN-%s up
+	`, bondif, vlan, vlan, vlan))
+	fmt.Printf("INFO: Executing bash scripts to create vlan %s at interface %s\n", vlan, myif)
+	output, err := cmd.CombinedOutput()
+	fmt.Println("-->", string(output))
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println(string(output))
+}
+
+func Bond0Create(bondif string, myif string, mynode string) {
+	cmd := exec.Command("docker", "exec", "-i", mynode, "bash")
+	cmd.Stdin = strings.NewReader(fmt.Sprintf(`#!/bin/bash	
+	ip link add %s type bond
+	ip link set %s down
+	ip link set %s master %s
+	ip link set %s up mtu 9500
+	`, bondif, myif, myif, bondif, bondif))
+	fmt.Printf("INFO: Executing bash scripts to create bond interface %s\n", bondif)
+	output, err := cmd.CombinedOutput()
+	fmt.Println("-->", string(output))
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println(string(output))
+}

@@ -9,7 +9,7 @@ spec:
   "name": "ipvlan-1001",
   "plugins": [{
     "type": "ipvlan",
-    "master": "VLAN-251",
+    "master": "VLAN-1001",
     "ipam": {
       "type": "host-local",
       "ranges": [
@@ -50,7 +50,7 @@ spec:
   "name": "ipvlan-1002",
   "plugins": [{
     "type": "ipvlan",
-    "master": "VLAN-252",
+    "master": "VLAN-1002",
     "ipam": {
       "type": "host-local",
       "ranges": [

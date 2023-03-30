@@ -13,6 +13,10 @@ type stdOut struct{}
 
 var wg = sync.WaitGroup{}
 
+var KHostList []Kind_Hosts
+
+const bondif = "bond0"
+
 type Kind_Data struct {
 	Cluster      []Cluster_Data `yaml:"clusters"`
 	Links        []Link_Data    `yaml:"links"`
@@ -32,10 +36,15 @@ type Cluster_Data struct {
 }
 
 type Link_Data struct {
-	K8sNode   string `yaml:"k8sNode"`
-	ClabNode  string `yaml:"clabNode"`
-	K8sIpv4   string `yaml:"k8sIpv4"`
-	K8sIpv4Gw string `yaml:"k8sIpv4Gw"`
+	K8sNode      string      `yaml:"k8sNode"`
+	ClabNode     string      `yaml:"clabNode"`
+	K8sIpv4      string      `yaml:"k8sIpv4"`
+	K8sIpv4Gw    string      `yaml:"k8sIpv4Gw"`
+	IpvlanMaster []Vlan_Data `yaml:"ipvlanMaster"`
+}
+
+type Vlan_Data struct {
+	Vlan string `yaml:"vlan"`
 }
 
 type ImagesToLoad_Data struct {
@@ -44,6 +53,11 @@ type ImagesToLoad_Data struct {
 
 type Resources_Data struct {
 	App string `yaml:"app"`
+}
+
+type Kind_Hosts struct {
+	Hostname string
+	Ipadd    string
 }
 
 func checkerr(err error) {

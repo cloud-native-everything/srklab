@@ -6,7 +6,7 @@ import (
 	"os/exec"
 	"regexp"
 
-	// DockerNet "github.com/cloud-native-everything/srklab/pkg/dockerapi"
+	DockerNet "github.com/cloud-native-everything/srklab/pkg/dockerapi"
 	kindApp "github.com/cloud-native-everything/srklab/pkg/kind"
 	"sigs.k8s.io/kind/pkg/cmd"
 )
@@ -14,7 +14,7 @@ import (
 func Start(configFile string) {
 
 	kindVars := getVars(configFile)
-	/*DockerNet.DockerNetworkCreate(kindVars.Network, kindVars.Prefix)
+	DockerNet.DockerNetworkCreate(kindVars.Network, kindVars.Prefix)
 	wg.Add(1)
 	go clab(kindVars.ClabTopology)
 	runKind(*kindVars)
@@ -27,10 +27,8 @@ func Start(configFile string) {
 		wg.Add(1)
 		go execApps(kindVars.Cluster[i].Resources, kindVars.Cluster[i].Kubeconfig, "default")
 	}
-	wg.Wait() */
-	for i := 0; i < len(kindVars.Cluster); i++ {
-		MyNodes(kindVars.Cluster[i].Name)
-	}
+	wg.Wait()
+
 }
 
 // Main is the kind main(), it will invoke Run(), if an error is returned
@@ -112,7 +110,13 @@ func kindsetInf(mylinks []Link_Data) {
 		re2 := regexp.MustCompile(`:e\d+-\d+`)
 		mynode := re2.ReplaceAllString(mylinks[i].K8sNode, "")
 		KNetScript(mylinks[i].K8sIpv4, myif, mylinks[i].K8sIpv4Gw, mynode)
+		Bond0Create(bondif, myif, mynode)
+		for j := 0; j < len(mylinks[i].IpvlanMaster); j++ {
+			KNetVlanMaster(mylinks[i].IpvlanMaster[j].Vlan, bondif, myif, mynode)
+
+		}
 	}
+
 }
 
 func execApps(myres []Resources_Data, kubeconf string, myns string) {

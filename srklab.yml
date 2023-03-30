@@ -61,10 +61,16 @@ links:
       clabNode: "clab-srv6-demo-LEAF-E1-1:e1-10"
       k8sIpv4: "192.168.201.101/24"
       k8sIpv4Gw: "192.168.201.1"
+      ipvlanMaster:
+        - vlan: 1001
+        - vlan: 1002
     - k8sNode: "edge2-control-plane:e1-1"
       clabNode: "clab-srv6-demo-LEAF-E2-1:e1-10"
       k8sIpv4: "192.168.202.101/24"
       k8sIpv4Gw: "192.168.202.1"
+      ipvlanMaster:
+        - vlan: 1001
+        - vlan: 1002
     - k8sNode: "datacenter-worker:e1-1"
       clabNode: "clab-srv6-demo-LEAF-DC-1:e1-10"
       k8sIpv4: "192.168.101.101/24"
