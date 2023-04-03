@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"os/exec"
+	"strings"
+	"time"
 )
 
 func ExecKubeApps(myapps Resources_Data, mykubeconf string, myns string) {
@@ -24,8 +26,14 @@ func ExecKubeApps(myapps Resources_Data, mykubeconf string, myns string) {
 	// Check for errors
 	if err != nil {
 		fmt.Printf("Error running kubectl command: %v\n", err)
-		fmt.Printf("Command output: %s\n", stderr.String())
+		fmt.Printf("Command output for %s: %s\n", mykubeconf, stderr.String())
 	} else {
-		fmt.Printf("Command output: %s\n", stdout.String())
+		fmt.Printf("Command output for %s: %s\n", mykubeconf, stdout.String())
 	}
+
+	if strings.Contains(myapps.App, "multus") {
+		fmt.Printf("INFO: Waiting for Multus to be in running state at %s\n", mykubeconf)
+		time.Sleep(70 * time.Second)
+	}
+
 }

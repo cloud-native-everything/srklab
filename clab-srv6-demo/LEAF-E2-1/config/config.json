@@ -1905,23 +1905,23 @@
           }
         },
         {
-          "index": 251,
+          "index": 1001,
           "type": "srl_nokia-interfaces:bridged",
           "srl_nokia-interfaces-vlans:vlan": {
             "encap": {
               "single-tagged": {
-                "vlan-id": 251
+                "vlan-id": 1001
               }
             }
           }
         },
         {
-          "index": 252,
+          "index": 1002,
           "type": "srl_nokia-interfaces:bridged",
           "srl_nokia-interfaces-vlans:vlan": {
             "encap": {
               "single-tagged": {
-                "vlan-id": 252
+                "vlan-id": 1002
               }
             }
           }
@@ -2228,7 +2228,7 @@
       "type": "srl_nokia-network-instance:mac-vrf",
       "interface": [
         {
-          "name": "ethernet-1/10.251"
+          "name": "ethernet-1/10.1001"
         },
         {
           "name": "ethernet-1/20.1001"
@@ -2240,7 +2240,7 @@
       "type": "srl_nokia-network-instance:mac-vrf",
       "interface": [
         {
-          "name": "ethernet-1/10.252"
+          "name": "ethernet-1/10.1002"
         },
         {
           "name": "ethernet-1/20.1002"

@@ -109,8 +109,8 @@ func kindsetInf(mylinks []Link_Data) {
 		myif := re1.FindString(mylinks[i].K8sNode)
 		re2 := regexp.MustCompile(`:e\d+-\d+`)
 		mynode := re2.ReplaceAllString(mylinks[i].K8sNode, "")
-		KNetScript(mylinks[i].K8sIpv4, myif, mylinks[i].K8sIpv4Gw, mynode)
-		Bond0Create(bondif, myif, mynode)
+		//KNetScript(mylinks[i].K8sIpv4, myif, mylinks[i].K8sIpv4Gw, mynode)
+		Bond0Create(bondif, myif, mynode, mylinks[i].K8sIpv4, mylinks[i].K8sIpv4Gw)
 		for j := 0; j < len(mylinks[i].IpvlanMaster); j++ {
 			KNetVlanMaster(mylinks[i].IpvlanMaster[j].Vlan, bondif, myif, mynode)
 
