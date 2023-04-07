@@ -1,0 +1,9 @@
+docker pull  alpine:latest
+docker pull  rogerw/cassowary:v0.14.1
+docker pull  pinrojas/cassowary:0.33
+docker pull  prom/pushgateway:latest
+docker pull  ghcr.io/k8snetworkplumbingwg/multus-cni:stable
+docker pull  python:latest
+docker pull  quay.io/metallb/speaker:v0.12.1
+docker pull  quay.io/metallb/controller:v0.12.1
+docker pull  ghcr.io/nokia/srlinux:21.6.4

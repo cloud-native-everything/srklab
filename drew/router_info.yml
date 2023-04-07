@@ -1,0 +1,22 @@
+---
+username: admin
+password: admin
+port: 830
+gnmi_port: 57400
+insecure: True
+hostkey_verify: False
+routers:
+  sros:
+    clab-sr-demo-R1: None
+    clab-sr-demo-R2: None
+    clab-sr-demo-R3: None
+    clab-sr-demo-R4: None
+    clab-sr-demo-R5: None
+    clab-sr-demo-R6: None
+    clab-sr-demo-R7: None
+    clab-sr-demo-R11: None
+    clab-sr-demo-R12: None
+    clab-sr-demo-R21: None
+    clab-sr-demo-R22: None
+    clab-sr-demo-R31: None
+    clab-sr-demo-R32: None

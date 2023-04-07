@@ -1,0 +1,58 @@
+all:
+  children:
+    bridge:
+      hosts:
+        clab-sr-demo-R2-R4:
+          ansible_host: 
+        clab-sr-demo-R3-R5:
+          ansible_host: 
+    linux:
+      hosts:
+        clab-sr-demo-grafana:
+          ansible_host: 172.18.100.116
+        clab-sr-demo-prometheus:
+          ansible_host: 172.18.100.115
+    srl:
+      hosts:
+        clab-sr-demo-BORDER-DC:
+          ansible_host: 172.18.100.125
+        clab-sr-demo-LEAF-DC-1:
+          ansible_host: 172.18.100.121
+        clab-sr-demo-LEAF-DC-2:
+          ansible_host: 172.18.100.122
+        clab-sr-demo-LEAF-E1-1:
+          ansible_host: 172.18.100.131
+        clab-sr-demo-LEAF-E2-1:
+          ansible_host: 172.18.100.141
+        clab-sr-demo-SPINE-DC-1:
+          ansible_host: 172.18.100.123
+        clab-sr-demo-SPINE-DC-2:
+          ansible_host: 172.18.100.124
+    vr-sros:
+      hosts:
+        clab-sr-demo-R1:
+          ansible_host: 172.18.100.9
+        clab-sr-demo-R11:
+          ansible_host: 172.18.100.11
+        clab-sr-demo-R12:
+          ansible_host: 172.18.100.12
+        clab-sr-demo-R2:
+          ansible_host: 172.18.100.2
+        clab-sr-demo-R21:
+          ansible_host: 172.18.100.21
+        clab-sr-demo-R22:
+          ansible_host: 172.18.100.22
+        clab-sr-demo-R3:
+          ansible_host: 172.18.100.3
+        clab-sr-demo-R31:
+          ansible_host: 172.18.100.31
+        clab-sr-demo-R32:
+          ansible_host: 172.18.100.32
+        clab-sr-demo-R4:
+          ansible_host: 172.18.100.4
+        clab-sr-demo-R5:
+          ansible_host: 172.18.100.5
+        clab-sr-demo-R6:
+          ansible_host: 172.18.100.6
+        clab-sr-demo-R7:
+          ansible_host: 172.18.100.7
